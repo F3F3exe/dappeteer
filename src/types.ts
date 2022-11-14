@@ -27,6 +27,7 @@ export type DappeteerLaunchOptions = {
 declare global {
   interface Window {
     ethereum: MetaMaskInpageProvider;
+    getItem: (message: string) => void;
   }
 }
 
@@ -74,6 +75,8 @@ export type Dappeteer = {
   page: DappeteerPage;
   snaps: {
     getAllNotifications: () => Promise<NotificationList>;
+    notificationObserver: () => Promise<NotificationList>;
+    waitForAmountOfNotifications: (amount: number) => Promise<void>;
     invokeSnap: <R = unknown, P extends Serializable = Serializable>(
       page: DappeteerPage,
       snapId: string,
