@@ -3,7 +3,6 @@ import dappeteer from '@chainsafe/dappeteer';
 
 const getElementByContent = (page, text, type = '*', timeout = '2000') =>
   page.waitForXPath(`//${type}[contains(text(), '${text}')]`, { timeout: `${timeout}` });
-////*[@id="__next"]/div/div[1]/div/nav/ul/div[4]/ul/div[3]/li/div/button/i
 
 const clickOnButton = async (page, text) => {
   const button = await getElementByContent(page, text, 'i');
@@ -17,31 +16,24 @@ const clickOnButton = async (page, text) => {
 async function main() {
   const [metamask, page, browser] = await dappeteer.bootstrap(puppeteer, { seed: 'already turtle birth enroll since owner keep patch skirt drift any dinner', password: 'password1234', metamaskVersion: 'v10.15.0', args: ['--start-maximized']  });
   const pages = await browser.pages();
-  //await pages[1].reload();
-  //await pages[1].waitForNavigation();
   
-  // you can import a token
-  //await metamask.addToken({
-    //tokenAddress: '0x4f96fe3b7a6cf9725f59d353f723c1bdb64ca6aa',
-    //symbol: 'KAKI',
-  //});
   await page.setViewport({
     width: 1600,
     height: 900,
     deviceScaleFactor: 1,
   });
   
-  // go to a dapp and do something that prompts MetaMask to confirm a transaction
+  // go to a dapp and do something 
   await page.goto('https://across.to/');
   //await page.goto('https://opensea.io/');
   await (pages[0]).bringToFront();
   
 
   //check for agree of terms
-  
+  // todo
 
-//*[@id="__next"]/div/div[1]/div[4]/button[2]
-  //await clickOnButton(page, 'menu'); //*[@id="swap-page"]/div/div[2]/button
+
+  //try to click on connect button
   let opt = 0;
   try {
     await page.waitForXPath(`//*[@id="__next"]/div/div[1]/div[4]/button[2]`, { timeout: 5000 }); //https://looksrare.org/ because they hide it
@@ -179,11 +171,10 @@ async function main() {
   } else {
     console.log('no "connect wallet" button found');
   }
-  //  //*[@id="connect-wallet"]/p
-  // //*[@id="swap-page"]/div/div[2]/button
+  
   
 
-  
+  //try to click on metamask button
   let opt1 = 0;
   try {
     await getElementByContent(page, 'MetaMask', 'Span', 5000);
@@ -269,15 +260,9 @@ async function main() {
   } else {
     console.log("no 'MetaMask button' found");
   }
-  ////*[@id="metamask"]
-  /*
-  page.waitForXPath(`//${type}[contains(text(), '${text}')]`, { timeout: 5000 });
-  const button_metamask = await getElementByContent(page, 'MetaMask', 'div', 20000);
-  const pages2 = await browser.pages();
-  console.log(pages2.length);*/
-  //await (pages[2]).bringToFront();
+  
 
-  //connect metamask
+  //connect metamask - same for all dapps
   
   const popup = await newPagePromise;
 
@@ -286,27 +271,16 @@ async function main() {
   const button_connect = await getElementByContent(popup, 'Connect', 'Button');
   
   //see if metamask needs to sign
-  
   try {
     
     await button_connect.click();
-    //await (pages[2]).bringToFront();
     const button_sign = await getElementByContent(popup, 'Sign', 'Button');
     await button_sign.click();
   } catch (error) {
     console.log('no sign needed');
-    //await button_connect.click();
   }
   
-  /*
-  if(need_signature){
-    console.log("need to sign");
-    const button_sign = await getElementByContent(page, 'Sign', 'Button');
-    await button_sign.click();
-  }*/
-  // 🏌
-  //await metamask.confirmTransaction();
-  //const button_top = await getElementByContent(page, 'Top', '*');
+  
   console.log("connection successfull");
   browser.close();
 }
