@@ -38,6 +38,7 @@
   ],
   "license": "MIT",
   "dependencies": {
+    "@chainsafe/dappeteer": "^3.0.0",
     "@types/chai-as-promised": "^7.1.5",
     "chai-as-promised": "^7.1.1",
     "node-stream-zip": "^1.13.0"
